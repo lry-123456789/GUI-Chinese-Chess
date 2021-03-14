@@ -39,6 +39,8 @@ void choice(int a);
 void init(int a);
 void update(int a);
 void database(int a);
+void judge_is_available(int a, int b);
+int database1(int a, int b);
 
 #define WND_WIDTH 1000
 #define WND_HEIGHT 1000
@@ -65,8 +67,13 @@ void mouse(int a)
 {
 	MOUSEMSG m;
 	FlushMouseMsgBuffer();
+	int i = 0;
+	int j = 0;
 	while (1)
 	{
+		//控制模板
+		//下面为控制的一个实际的例子
+		/******************************************************\
 		while (MouseHit())
 		{
 			m = GetMouseMsg();
@@ -102,7 +109,21 @@ void mouse(int a)
 			}
 
 		}
-
+		\*******************************************************************/
+		while (MouseHit())
+		{
+			m = GetMouseMsg();
+			for (i = 0; i < 9; i++)
+			{
+				for (j = 0; j < 10; j++)
+				{
+					if ((m.x > (50 + 100 * i) && m.x < (100 * i - 50)) && (m.y > (100 * j)) && (m.y < 100 * j + 100))
+					{
+						judge_is_available(i + 1, j + 1);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -137,7 +158,7 @@ void draw_line(int a)
 	line(900, 50, 900, 950);
 	for (i = 0; i < 7; i++)
 	{
-		line(200 + 100 * i, 50, 200+ 100 * i, 450 );
+		line(200 + 100 * i, 50, 200 + 100 * i, 450);
 	}
 	for (i = 0; i < 7; i++)
 	{
@@ -285,4 +306,52 @@ void draw_char(int a)
 	outtextxy(330, 470, L'河');
 	outtextxy(630, 470, L'汉');
 	outtextxy(730, 470, L'界');
+}
+
+void database(int a)
+{
+
+}
+
+int database1(int a, int b)
+{
+	int aa[9][10] = { 0 };
+	//定义一个虚拟棋盘
+	//即将开始处理棋盘信息
+	//第一个数字1、2代表是红方还是黑方
+	//红为1，黑为2
+	//第二个数字1，2，3，4，5，6，7，8，9，0代表车，马，象，士，将（帅），炮，卒（兵）
+	aa[0][0] = 21;
+	aa[1][0] = 22;
+	aa[2][0] = 23;
+	aa[3][0] = 24;
+	aa[4][0] = 25;
+	aa[5][0] = 24;
+	aa[6][0] = 23;
+	aa[7][0] = 22;
+	aa[8][0] = 21;
+	aa[1][2] = 26;
+	aa[7][2] = 26;
+	aa[0][4] = 27;
+	aa[2][4] = 27;
+	aa[4][4] = 27;
+	aa[6][4] = 27;
+	aa[8][4] = 27;
+	aa[0][6] = 17;
+	aa[2][6] = 17;
+	aa[4][6] = 17;
+	aa[6][6] = 17;
+	aa[8][6] = 17;
+	aa[1][7] = 16;
+	aa[7][7] = 16;
+	aa[0][9] = 11;
+	aa[1][9] = 12;
+	aa[2][9] = 13;
+	aa[3][9] = 14;
+	aa[4][9] = 15;
+	aa[5][9] = 14;
+	aa[6][9] = 13;
+	aa[7][9] = 12;
+	aa[8][9] = 11;
+	return aa[a-1][b-1];
 }
